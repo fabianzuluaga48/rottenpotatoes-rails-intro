@@ -24,23 +24,18 @@
   
 <% end %>
 
-<div class="row">
-  <div class="col-12">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <div>
-        <%= link_to "Movie Title", movies_path(sort_by: "title", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "title_header", class: "btn btn-outline-secondary me-2" %>
-        <%= link_to "Release Date", movies_path(sort_by: "release_date", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "release_date_header", class: "btn btn-outline-secondary" %>
-      </div>
-    </div>
-  </div>
-</div>
+<p>
+  <%= link_to "Movie Title", movies_path(sort_by: "title", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "title_header" %>
+  |
+  <%= link_to "Release Date", movies_path(sort_by: "release_date", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "release_date_header" %>
+</p>
 
 <div id="movies">
   <% @movies.each do |movie| %>
-    <div class="movie">
-      <h3><%= movie.title %></h3>
-      <p>Rating: <%= movie.rating %></p>
-      <p>Released: <%= movie.release_date %></p>
+    <div>
+      <strong><%= movie.title %></strong> | 
+      <%= movie.rating %> | 
+      <%= movie.release_date %> | 
       <%= link_to "More about #{movie.title}", movie_path(movie) %>
     </div>
   <% end %>
