@@ -24,32 +24,37 @@
   
 <% end %>
 
-<table class="table table-striped col-md-12" id="movies">
-  <thead>
-    <tr>
-      <th><%= link_to "Movie Title", movies_path(sort_by: "title", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "title_header" %></th>
-      <th>Rating</th>
-      <th><%= link_to "Release Date", movies_path(sort_by: "release_date", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "release_date_header" %></th>
-      <th>More Info</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @movies.each do |movie| %>
-      <tr>
-        <td>
-          <%= movie.title %>
-        </td>
-        <td>
-          <%= movie.rating %>
-        </td>
-        <td>
-          <%= movie.release_date %>
-        </td>
-        <td>
-          <%= link_to "More about #{movie.title}", movie_path(movie) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <%= link_to "Movie Title", movies_path(sort_by: "title", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "title_header", class: "btn btn-outline-secondary me-2" %>
+        <%= link_to "Release Date", movies_path(sort_by: "release_date", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "release_date_header", class: "btn btn-outline-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="movies">
+  <% @movies.each do |movie| %>
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <strong><%= movie.title %></strong>
+          </div>
+          <div class="col-md-2">
+            <span class="badge bg-secondary"><%= movie.rating %></span>
+          </div>
+          <div class="col-md-3">
+            <%= movie.release_date %>
+          </div>
+          <div class="col-md-4">
+            <%= link_to "More about #{movie.title}", movie_path(movie), class: "btn btn-sm btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 <%= link_to 'Add new movie', new_movie_path, :class => 'btn btn-primary' %>
