@@ -9,15 +9,36 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.all_ratings
     
-    # Handle rating filtering
+    # Handle rating filtering with session persistence
     if params[:ratings].present?
+      # User provided new rating filters
       @ratings_to_show = params[:ratings].keys
-    else
+      session[:ratings] = @ratings_to_show
+    elsif params.key?(:ratings) && params[:ratings].blank?
+      # User unchecked all boxes - show all ratings
       @ratings_to_show = @all_ratings
+      session[:ratings] = @all_ratings
+    elsif session[:ratings].present?
+      # No new params, use session values
+      @ratings_to_show = session[:ratings]
+    else
+      # First visit, default to all ratings
+      @ratings_to_show = @all_ratings
+      session[:ratings] = @all_ratings
     end
     
-    # Handle sorting
-    @sort_by = params[:sort_by]
+    # Handle sorting with session persistence
+    if params[:sort_by].present?
+      # User provided new sort parameter
+      @sort_by = params[:sort_by]
+      session[:sort_by] = @sort_by
+    elsif session[:sort_by].present?
+      # No new params, use session value
+      @sort_by = session[:sort_by]
+    else
+      # No sorting preference
+      @sort_by = nil
+    end
     
     # Get filtered movies and apply sorting
     @movies = Movie.with_ratings(@ratings_to_show)
