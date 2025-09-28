@@ -16,7 +16,15 @@ class MoviesController < ApplicationController
       @ratings_to_show = @all_ratings
     end
     
+    # Handle sorting
+    @sort_by = params[:sort_by]
+    
+    # Get filtered movies and apply sorting
     @movies = Movie.with_ratings(@ratings_to_show)
+    
+    if @sort_by.present? && ['title', 'release_date'].include?(@sort_by)
+      @movies = @movies.order(@sort_by)
+    end
   end
 
   def new
