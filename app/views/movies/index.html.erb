@@ -37,23 +37,11 @@
 
 <div id="movies">
   <% @movies.each do |movie| %>
-    <div class="card mb-3">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-md-3">
-            <strong><%= movie.title %></strong>
-          </div>
-          <div class="col-md-2">
-            <span class="badge bg-secondary"><%= movie.rating %></span>
-          </div>
-          <div class="col-md-3">
-            <%= movie.release_date %>
-          </div>
-          <div class="col-md-4">
-            <%= link_to "More about #{movie.title}", movie_path(movie), class: "btn btn-sm btn-primary" %>
-          </div>
-        </div>
-      </div>
+    <div class="movie">
+      <h3><%= movie.title %></h3>
+      <p>Rating: <%= movie.rating %></p>
+      <p>Released: <%= movie.release_date %></p>
+      <%= link_to "More about #{movie.title}", movie_path(movie) %>
     </div>
   <% end %>
 </div>
