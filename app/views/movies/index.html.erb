@@ -24,20 +24,31 @@
   
 <% end %>
 
-<p>
-  <%= link_to "Movie Title", movies_path(sort_by: "title", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "title_header" %>
-  |
-  <%= link_to "Release Date", movies_path(sort_by: "release_date", ratings: Hash[@ratings_to_show.map {|rating| [rating, "1"]}]), id: "release_date_header" %>
-</p>
-
 <div id="movies">
   <% @movies.each do |movie| %>
-    <div>
-      <strong><%= movie.title %></strong> | 
-      <%= movie.rating %> | 
-      <%= movie.release_date %> | 
-      <%= link_to "More about #{movie.title}", movie_path(movie) %>
-    </div>
+    <div id="<%= dom_id movie %>">
+        <p>
+          <strong>Title:</strong>
+          <%= movie.title %>
+        </p>
+
+        <p>
+          <strong>Rating:</strong>
+          <%= movie.rating %>
+        </p>
+
+        <p>
+          <strong>Description:</strong>
+          <%= movie.description %>
+        </p>
+
+        <p>
+          <strong>Release date:</strong>
+          <%= movie.release_date %>
+        </p>
+      </div>
+      <p><%= link_to "Show this movie", movie %></p>
   <% end %>
 </div>
-<%= link_to 'Add new movie', new_movie_path, :class => 'btn btn-primary' %>
+
+<%= link_to 'Add new movie', new_movie_path, class: 'btn btn-primary' %>
